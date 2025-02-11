@@ -15,7 +15,7 @@ resource "aws_iam_role" "k8s" {
 resource "aws_iam_policy" "k8s_policy" {
   name        = "K8s-admin"
   description = "full access k8s"
-  
+
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [

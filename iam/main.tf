@@ -1,19 +1,21 @@
 resource "aws_iam_group" "ec2_admin" {
-  name = "EC2-admins"
+  name = var.group
 }
 
 resource "aws_iam_user" "users" {
-  name = "EC2-user"
+  count = length(var.users)
+  name = var.users[count.index]
 }
 
 resource "aws_iam_group_membership" "group_add" {
   name  = "add-user-to-group"
+  count = length(var.users)
   group = aws_iam_group.ec2_admin.name
-  users = [aws_iam_user.users.name]
+  users = [aws_iam_user.users[count.index].name]
 }
 
 resource "aws_iam_group_policy_attachment" "policy_attach" {
-  group = aws_iam_group.ec2_admin.name
+  group      = aws_iam_group.ec2_admin.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
 }
 

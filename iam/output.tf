@@ -1,5 +1,5 @@
 output "iam_user" {
-  value = aws_iam_user.users.name
+  value = aws_iam_user.users[*].name
 }
 
 output "iam_group" {
